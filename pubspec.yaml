@@ -1,6 +1,6 @@
 name: githubapi
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -9,11 +9,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+  dio: any
+
+  # Navigation
+  go_router: ^13.2.2
+  json_annotation: ^4.9.0
+  url_launcher: ^6.3.2
+  mocktail: ^1.0.4
+  network_image_mock: ^2.1.1
+
+  # Remove http if using dio exclusively
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  build_runner: any
+  riverpod_generator: ^2.6.4
+  json_serializable: ^6.9.5
 
 flutter:
   uses-material-design: true
