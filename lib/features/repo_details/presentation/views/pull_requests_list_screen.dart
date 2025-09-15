@@ -65,21 +65,28 @@ class _PullRequestsListScreenState
           ),
           Expanded(
             child: prsAsync.when(
-              data: (prs) => ListView.builder(
-                itemCount: prs.length,
-                itemBuilder: (context, index) {
-                  final pr = prs[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(pr.user.avatarUrl),
-                    ),
-                    title: Text(pr.title),
-                    subtitle: Text('#${pr.number} • ${pr.user.login}'),
-                    trailing: Text(pr.state),
-                    onTap: () => _openPR(context, pr.htmlUrl),
-                  );
-                },
-              ),
+              data: (prs) {
+                if (prs.isEmpty) {
+                  return Center(child: Text("No Pull Requests"));
+                }
+                return Center(
+                  child: ListView.builder(
+                    itemCount: prs.length,
+                    itemBuilder: (context, index) {
+                      final pr = prs[index];
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(pr.user.avatarUrl),
+                        ),
+                        title: Text(pr.title),
+                        subtitle: Text('#${pr.number} • ${pr.user.login}'),
+                        trailing: Text(pr.state),
+                        onTap: () => _openPR(context, pr.htmlUrl),
+                      );
+                    },
+                  ),
+                );
+              },
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) => Center(child: Text('Error: $e')),
             ),

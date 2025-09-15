@@ -16,21 +16,27 @@ class IssuesListScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Issues')),
       body: issuesAsync.when(
-        data: (issues) => ListView.builder(
-          itemCount: issues.length,
-          itemBuilder: (context, index) {
-            final issue = issues[index];
-            return ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(issue.user.avatarUrl),
-              ),
-              title: Text(issue.title),
-              subtitle: Text('#${issue.number} • ${issue.user.login}'),
-              trailing: Text(issue.state),
-              onTap: () => _openIssue(context, issue.htmlUrl),
-            );
-          },
-        ),
+        data: (issues) {
+          if (issues.isEmpty) {
+            return Center(child: Text("No issues"));
+          }
+
+          return ListView.builder(
+            itemCount: issues.length,
+            itemBuilder: (context, index) {
+              final issue = issues[index];
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(issue.user.avatarUrl),
+                ),
+                title: Text(issue.title),
+                subtitle: Text('#${issue.number} • ${issue.user.login}'),
+                trailing: Text(issue.state),
+                onTap: () => _openIssue(context, issue.htmlUrl),
+              );
+            },
+          );
+        },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, stackTrace) {
           log("Error: $e, stackTrace: $stackTrace");
